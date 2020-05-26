@@ -19,6 +19,13 @@ namespace MKAPI
         public int Height = -1;
         public List<Color> TextColors;
 
+        public bool HasBranches = false;
+        public string BranchIdentifier;
+        public bool IsDeletable = true;
+        public bool IsEditable = true;
+
+        public string PickerTabName;
+
         public int WindowWidth = -1;
         public int WindowHeight = -1;
 
@@ -27,18 +34,20 @@ namespace MKAPI
         public List<LoadCallback> OnLoadReadOnly = new List<LoadCallback>();
         public List<LoadCallback> OnCreateWindow = new List<LoadCallback>();
         public List<UtilityCallback> OnSaveWindow = new List<UtilityCallback>();
+        public List<UtilityCallback> OnCreateBlank = new List<UtilityCallback>();
 
-        public Command(string Identifier, string Name, Color HeaderColor = null)
+        public Command(string Identifier, string Name)
         {
             this.Identifier = Identifier;
             this.Name = Name;
             this.ShowHeader = true;
-            this.HeaderColor = HeaderColor == null ? HeaderColors.WHITE : HeaderColor;
+            this.HeaderColor = HeaderColors.WHITE;
             this.Width = -1;
             this.Height = -1;
             this.TextColors = new List<Color>() { Color.WHITE };
             this.OnCreateEmptyClone.Add(delegate (Command c)
             {
+                c.PickerTabName = this.PickerTabName;
                 c.ShowHeader = this.ShowHeader;
                 c.HeaderColor = this.HeaderColor.Clone();
                 c.Width = this.Width;
@@ -46,11 +55,16 @@ namespace MKAPI
                 c.WindowWidth = this.WindowWidth;
                 c.WindowHeight = this.WindowHeight;
                 c.TextColors = new List<Color>(this.TextColors);
+                c.HasBranches = this.HasBranches;
+                c.BranchIdentifier = this.BranchIdentifier;
+                c.IsDeletable = this.IsDeletable;
+                c.IsEditable = this.IsEditable;
                 c.OnCreateEmptyClone = new List<CloneCallback>(this.OnCreateEmptyClone);
                 c.OnCreateReadOnly = new List<WidgetCallback>(this.OnCreateReadOnly);
                 c.OnLoadReadOnly = new List<LoadCallback>(this.OnLoadReadOnly);
                 c.OnCreateWindow = new List<LoadCallback>(this.OnCreateWindow);
                 c.OnSaveWindow = new List<UtilityCallback>(this.OnSaveWindow);
+                c.OnCreateBlank = new List<UtilityCallback>(this.OnCreateBlank);
             });
         }
 
@@ -98,10 +112,12 @@ namespace MKAPI
 
         public void CallSaveWindow(dynamic Utility)
         {
-            this.OnSaveWindow.ForEach(d =>
-            {
-                d(Utility);
-            });
+            this.OnSaveWindow.ForEach(d => d(Utility));
+        }
+
+        public void CallCreateBlank(dynamic Utility)
+        {
+            this.OnCreateBlank.ForEach(d => d(Utility));
         }
     }
 }

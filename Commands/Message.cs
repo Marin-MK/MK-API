@@ -15,9 +15,11 @@ namespace MKAPI
             this.OnLoadReadOnly.Add(LoadReadOnly);
             this.OnCreateWindow.Add(CreateWindow);
             this.OnSaveWindow.Add(SaveWindow);
+            this.OnCreateBlank.Add(CreateBlank);
             this.HeaderColor = HeaderColors.GREEN;
             this.WindowWidth = 400;
             this.WindowHeight = 200;
+            this.PickerTabName = "General";
         }
 
         public List<BaseWidget> CreateReadOnly()
@@ -48,6 +50,11 @@ namespace MKAPI
         public void SaveWindow(dynamic Utility)
         {
             Utility.SetParam("text", TextBox.Text);
+        }
+
+        public void CreateBlank(dynamic Utility)
+        {
+            Utility.CreateParam("text", "");
         }
     }
 }

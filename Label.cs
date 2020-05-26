@@ -8,6 +8,7 @@ namespace MKAPI
     {
         public string Text;
         public bool Parse = false;
+        public Color Color;
 
         public Label(string UniqueID, BaseWidget Parent = null) : base(UniqueID, Parent)
         {

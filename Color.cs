@@ -8,6 +8,7 @@ namespace MKAPI
     {
         public static Color WHITE = new Color(255, 255, 255);
         public static Color GREEN = new Color(59, 229, 121);
+        public static Color YELLOW = new Color(204, 209, 67);
 
         public byte Red;
         public byte Green;

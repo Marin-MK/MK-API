@@ -23,12 +23,14 @@ namespace MKAPI.Commands
             this.OnLoadReadOnly.Add(LoadReadOnly);
             this.OnCreateWindow.Add(CreateWindow);
             this.OnSaveWindow.Add(SaveWindow);
+            this.OnCreateBlank.Add(CreateBlank);
             this.HeaderColor = HeaderColors.GREEN;
             this.TextColors.Add(new Color(0, 255, 0)); // Color 1
             this.TextColors.Add(new Color(255, 0, 0)); // Color 2
             this.TextColors.Add(new Color(255, 0, 255)); // Color 3
             this.WindowWidth = 370;
             this.WindowHeight = 200;
+            this.PickerTabName = "General";
         }
 
         public List<BaseWidget> CreateReadOnly()
@@ -175,6 +177,14 @@ namespace MKAPI.Commands
             if (ConstantButton.Selected) Utility.SetParam("value", ConstantBox.Index == 0);
             else if (SwitchButton.Selected) Utility.SetParam("value", new Dictionary<string, object>() { { ":group_id", SwitchBox.GroupID }, { ":switch_id", SwitchBox.SwitchID } });
             else if (ScriptButton.Selected) Utility.SetParam("value", ScriptBox.Text);
+        }
+
+        public void CreateBlank(dynamic Utility)
+        {
+            Utility.CreateParam("group_id", 1);
+            Utility.CreateParam("switch_id", 1);
+            Utility.CreateParam("operator", ":equal");
+            Utility.CreateParam("value", true);
         }
     }
 }
