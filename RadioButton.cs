@@ -9,7 +9,7 @@ namespace MKAPI
         public bool Selected = false;
         public string Text;
 
-        public BasicCallback OnSelected;
+        public BasicCallback OnSelectionChanged;
 
         public RadioButton(string UniqueID, BaseWidget Parent = null) : base(UniqueID, Parent)
         {

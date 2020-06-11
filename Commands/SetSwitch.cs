@@ -91,7 +91,7 @@ namespace MKAPI.Commands
             ConstantButton.X = 11;
             ConstantButton.Y = 64;
             ConstantButton.Text = "Constant:";
-            ConstantButton.OnSelected += ButtonPressed;
+            ConstantButton.OnSelectionChanged += ButtonPressed;
             ConstantBox = new Dropdown("constantbox");
             ConstantBox.X = 91;
             ConstantBox.Y = 61;
@@ -101,7 +101,7 @@ namespace MKAPI.Commands
             SwitchButton = new RadioButton("switchlabel");
             SwitchButton.X = 11;
             SwitchButton.Y = 94;
-            SwitchButton.OnSelected += ButtonPressed;
+            SwitchButton.OnSelectionChanged += ButtonPressed;
             SwitchBox = new SwitchPicker("switchbox");
             SwitchBox.X = 91;
             SwitchBox.Y = 91;
@@ -112,7 +112,7 @@ namespace MKAPI.Commands
             ScriptButton.X = 11;
             ScriptButton.Y = 124;
             ScriptButton.Text = "Script:";
-            ScriptButton.OnSelected += ButtonPressed;
+            ScriptButton.OnSelectionChanged += ButtonPressed;
             ScriptBox = new TextBox("scriptbox");
             ScriptBox.X = 91;
             ScriptBox.Y = 121;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,8 @@ namespace MKAPI
         public delegate void CloneCallback(Command Command);
         public delegate void UtilityCallback(dynamic Utility);
         public delegate List<BaseWidget> LoadCallback(dynamic Utility);
+        public delegate void ChoiceCallback(int ChoiceIndex);
+        public delegate dynamic BranchCallback(int BranchIndex, int CommandIndent);
 
         public string Identifier;
         public string Name;
@@ -68,9 +71,26 @@ namespace MKAPI
             });
         }
 
-        protected List<BaseWidget> Refresh(params BaseWidget[] Widgets)
+        protected List<BaseWidget> Refresh(params object[] Widgets)
         {
-            return Widgets.ToList();
+            List<BaseWidget> RefreshWidgets = new List<BaseWidget>();
+            foreach (object o in Widgets)
+            {
+                if (o is BaseWidget)
+                {
+                    if (RefreshWidgets.Contains((BaseWidget)o)) continue;
+                    RefreshWidgets.Add((BaseWidget) o);
+                }
+                else if (o is IList)
+                {
+                    foreach (object widget in (IList) o)
+                    {
+                        if (RefreshWidgets.Contains((BaseWidget) widget)) continue;
+                        RefreshWidgets.Add((BaseWidget) widget);
+                    }
+                }
+            }
+            return RefreshWidgets;
         }
 
         public Command CreateEmptyClone()
@@ -119,5 +139,21 @@ namespace MKAPI
         {
             this.OnCreateBlank.ForEach(d => d(Utility));
         }
+    }
+
+    public enum ButtonType
+    {
+        OK = 0,
+        OKCancel = 1,
+        YesNo = 2,
+        YesNoCancel = 3
+    }
+
+    public enum IconType
+    {
+        None = 0,
+        Error = 1,
+        Warning = 2,
+        Info = 3
     }
 }

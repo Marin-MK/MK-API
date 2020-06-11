@@ -10,6 +10,8 @@ namespace MKAPI
         public int Index = -1;
         public bool Focus = false;
 
+        public BasicCallback OnTextChanged;
+
         public TextBox(string UniqueID, BaseWidget Parent = null) : base(UniqueID, Parent)
         {
 

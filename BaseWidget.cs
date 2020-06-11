@@ -13,6 +13,7 @@ namespace MKAPI
         public int Width;
         public int Height;
         public bool Enabled = true;
+        public bool Visible = true;
 
         public delegate List<BaseWidget> BasicCallback();
 
